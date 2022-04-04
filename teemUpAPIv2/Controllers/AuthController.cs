@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using teemUpAPIv2.Models;
+using teemUpAPIv2.Services.UserServices;
 
 namespace teemUpAPIv2.Controllers
 {
@@ -15,10 +17,19 @@ namespace teemUpAPIv2.Controllers
         public static User user = new User();
 
         private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, IUserService userService)
         {
             _configuration = configuration;
+            _userService = userService;
+        }
+        
+        [HttpGet, Authorize]
+        public ActionResult<string> GetMe()
+        {
+            var userName = _userService.GetMyName();
+            return Ok(userName);
         }
 
         [HttpPost("register")]
