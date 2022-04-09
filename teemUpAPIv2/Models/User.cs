@@ -1,12 +1,13 @@
-﻿namespace teemUpAPIv2.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace teemUpAPIv2.Models
 {
     public class User
     {
-        public int id { get; set; }
-        public string UserName { get; set; } = string.Empty;
+        [Key]
+        public string email { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-         
 
     }
 }

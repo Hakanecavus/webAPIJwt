@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using teemUpAPIv2.Models;
+using teemUpAPIv2.Data;
 using teemUpAPIv2.Services.UserServices;
 
 namespace teemUpAPIv2.Controllers
@@ -18,40 +19,58 @@ namespace teemUpAPIv2.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
+        private readonly DataContext _context;
+        
 
-        public AuthController(IConfiguration configuration, IUserService userService)
+        public AuthController(IConfiguration configuration, IUserService userService, DataContext context)
         {
             _configuration = configuration;
             _userService = userService;
+            _context = context;
+            
         }
         
         [HttpGet, Authorize]
         public ActionResult<string> GetMe()
         {
-            var userName = _userService.GetMyName();
-            return Ok(userName);
+            var email = _userService.GetMyName();
+            return Ok(email);
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            
 
-            user.UserName = request.UserName;
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
+            
 
-            return Ok(user);
+            var userToCreate = new User
+            {
+                email = request.email,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
+            };
 
+            _context.Users.Add(userToCreate);
+            await _context.SaveChangesAsync();
+
+            
+
+            return Ok(user.email);
+            
 
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
-            if(user.UserName != request.UserName)
+            user = await _context.Users.FindAsync(request.email);
+            
+   
+            if (user == null)
             {
-                return BadRequest("User not found.");
+                return NotFound("User not found");
             }
             
             if(!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
@@ -66,7 +85,7 @@ namespace teemUpAPIv2.Controllers
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Name, user.email),
                 new Claim(ClaimTypes.Role, "Admin")
 
             };

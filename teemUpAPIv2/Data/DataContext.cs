@@ -11,5 +11,8 @@ namespace teemUpAPIv2.Data
 
         public DbSet<User> Users => Set<User>();
 
+        public DbSet<UserDetail> userDetails => Set<UserDetail>();
+        
+
     }
 }

@@ -12,8 +12,8 @@ using teemUpAPIv2.Data;
 namespace teemUpAPIv2.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220401095119_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220405104609_firstUpdate")]
+    partial class firstUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,8 @@ namespace teemUpAPIv2.Migrations
 
             modelBuilder.Entity("teemUpAPIv2.Models.User", b =>
                 {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
@@ -40,11 +37,19 @@ namespace teemUpAPIv2.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("lastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("phoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserName");
 
                     b.ToTable("Users");
                 });
