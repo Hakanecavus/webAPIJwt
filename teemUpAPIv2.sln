@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "teemUpAPIv2", "teemUpAPIv2\teemUpAPIv2.csproj", "{227B57F5-A961-4ED1-BB29-9F7172BCEB1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "teemUpAPIv2", "teemUpAPIv2\teemUpAPIv2.csproj", "{227B57F5-A961-4ED1-BB29-9F7172BCEB1D}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EA9A0C76-0859-49F1-BB84-BFD26CC2FB33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{227B57F5-A961-4ED1-BB29-9F7172BCEB1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{227B57F5-A961-4ED1-BB29-9F7172BCEB1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{227B57F5-A961-4ED1-BB29-9F7172BCEB1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA9A0C76-0859-49F1-BB84-BFD26CC2FB33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA9A0C76-0859-49F1-BB84-BFD26CC2FB33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA9A0C76-0859-49F1-BB84-BFD26CC2FB33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA9A0C76-0859-49F1-BB84-BFD26CC2FB33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

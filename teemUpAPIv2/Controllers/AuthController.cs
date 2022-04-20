@@ -42,9 +42,7 @@ namespace teemUpAPIv2.Controllers
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
             
-
             
-
             var userToCreate = new User
             {
                 email = request.email,
@@ -66,20 +64,22 @@ namespace teemUpAPIv2.Controllers
         public async Task<ActionResult<string>> Login(UserDto request)
         {
             user = await _context.Users.FindAsync(request.email);
-            
-   
-            if (user == null)
+
+
+            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt) || user == null)
             {
-                return NotFound("User not found");
+                return BadRequest("E-mail or password is incorrect");
             }
-            
-            if(!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
-            {
-                return BadRequest("Wrong password.");
+            else {
+                string token = CreateToken(user);
+
+                Response.Cookies.Append("token", token, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+                Response.Cookies.Append("email", user.email, new CookieOptions() { HttpOnly = true, SameSite = SameSiteMode.Strict });
+
+                return Ok("Login Successful");
             }
 
-            string token = CreateToken(user);
-            return Ok(token);
+            
         }
         private string CreateToken(User user)
         {

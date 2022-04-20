@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  teemupapiv2:
+    image: ${DOCKER_REGISTRY-}teemupapiv2
+    build:
+      context: .
+      dockerfile: teemUpAPIv2/Dockerfile
