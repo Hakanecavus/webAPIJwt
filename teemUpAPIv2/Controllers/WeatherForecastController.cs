@@ -20,7 +20,7 @@ namespace teemUpAPIv2.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast"), Authorize(Roles ="Admin")]  //Eðer auth yapýlan bir class da auth istemediðin bir method varsa class'ý auth yapýp fonksiyonu AllowAnonymous kullan
+        [HttpGet(Name = "GetWeatherForecast")]//, Authorize(Roles ="Admin")]  //Eðer auth yapýlan bir class da auth istemediðin bir method varsa class'ý auth yapýp fonksiyonu AllowAnonymous kullan
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
